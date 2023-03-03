@@ -5274,6 +5274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1973303642830519055, guid: ca1fcb006e24b964592b7e258f3c412b, type: 3}
+      propertyPath: orthographic size
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: ca1fcb006e24b964592b7e258f3c412b, type: 3}
@@ -9788,6 +9792,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8120566957803405641, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
+      propertyPath: dashForce
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8120566957803405644, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
       propertyPath: m_RootOrder
       value: 3

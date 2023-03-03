@@ -11,8 +11,14 @@ public class PlayerController : MonoBehaviour
     //Fuerza de salto del jugador
     public float jumpForce;
 
+    public float slideForce;
+
+    public float dashForce;
+
     //Variable para saber si el jugador está en el suelo
     private bool isGrounded;
+
+    private bool airdash;
     //Punto por debajo del jugador que tomamos como referencia para detectar el suelo
     public Transform groundCheckPoint;
     //Variable para detectar el Layer de suelo
@@ -24,6 +30,12 @@ public class PlayerController : MonoBehaviour
 
     //Variable para saber si podemos hacer doble salto
     private bool canDoubleJump;
+
+    //Podemos planear
+    
+
+    //Podemos dashear
+    private bool candash;
 
     //Referencia al Animator del jugador
     private Animator anim;
@@ -77,6 +89,9 @@ public class PlayerController : MonoBehaviour
                     theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
                     //Una vez en el suelo, reactivamos la posibilidad de doble salto
                     canDoubleJump = true;
+
+                   
+                    candash = true;
                 }
                 //Si el jugador no está en el suelo
                 else
@@ -88,6 +103,34 @@ public class PlayerController : MonoBehaviour
                         theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
                         //Hacemos que no se pueda volver a saltar de nuevo
                         canDoubleJump = false;
+
+                        
+                    }
+                }
+            }
+
+            //Si se pulsa el boton de Slide
+            if (Input.GetButton("Slide"))
+            {
+                //Slide
+                theRB.velocity = new Vector2(theRB.velocity.x, slideForce);
+            }
+            //Si pulsa el boton de dash
+            if (Input.GetButton("Dash"))
+            {
+                //Si el jugador está en el suelo
+                if (isGrounded)
+                {
+                    //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
+                    theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
+                    airdash = true;
+                }
+                else
+                {
+                    if (airdash)
+                    {
+                        theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
+                        airdash = false;
                     }
                 }
             }
