@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     //Variable para saber si el jugador está en el suelo
     private bool isGrounded;
 
-    private bool airdash;
+    private bool canairdash;
     //Punto por debajo del jugador que tomamos como referencia para detectar el suelo
     public Transform groundCheckPoint;
     //Variable para detectar el Layer de suelo
@@ -104,7 +104,7 @@ public class PlayerController : MonoBehaviour
                         //Hacemos que no se pueda volver a saltar de nuevo
                         canDoubleJump = false;
 
-                        
+                        candash = false;
                     }
                 }
             }
@@ -119,18 +119,30 @@ public class PlayerController : MonoBehaviour
             if (Input.GetButton("Dash"))
             {
                 //Si el jugador está en el suelo
-                if (isGrounded)
+                if (isGrounded && isLeft)
                 {
                     //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
-                    theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
-                    airdash = true;
+                    theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
+                    canairdash = true;
                 }
+                     else if (isGrounded && !isLeft)
+                    {
+
+                    theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
+                    canairdash = true;
+
+                    }
                 else
                 {
-                    if (airdash)
+                    if (canairdash && isLeft)
+                    {
+                        theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
+                        canairdash = false;
+                    }
+                    else if (canairdash && !isLeft)
                     {
                         theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
-                        airdash = false;
+                        canairdash = false;
                     }
                 }
             }

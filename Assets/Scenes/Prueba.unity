@@ -9794,7 +9794,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8120566957803405641, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
       propertyPath: dashForce
-      value: 12
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8120566957803405644, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
       propertyPath: m_RootOrder
