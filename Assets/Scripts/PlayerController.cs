@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private TrailRenderer tr;
+
     //Velocidad del jugador
     public float moveSpeed;
     //El rigidbody del jugador
@@ -13,12 +15,16 @@ public class PlayerController : MonoBehaviour
 
     public float slideForce;
 
-    public float dashForce;
 
     //Variable para saber si el jugador está en el suelo
     private bool isGrounded;
 
-    private bool canairdash;
+    private bool canDash = true;
+    private bool isDashing = true;
+    public float dashForce;
+    private float dashingTime = 0.3f;
+    private float dashingCooldown = 1f;
+
     //Punto por debajo del jugador que tomamos como referencia para detectar el suelo
     public Transform groundCheckPoint;
     //Variable para detectar el Layer de suelo
@@ -30,12 +36,7 @@ public class PlayerController : MonoBehaviour
 
     //Variable para saber si podemos hacer doble salto
     private bool canDoubleJump;
-
-    //Podemos planear
     
-
-    //Podemos dashear
-    private bool candash;
 
     //Referencia al Animator del jugador
     private Animator anim;
@@ -70,6 +71,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetButton("Dash") && canDash)
+        {
+            StartCoroutine(Dash());
+        }
+
         //Si el contador de KnockBack se ha vaciado, el jugador recupera el control del movimiento
         if (knockBackCounter <= 0)
         {
@@ -90,12 +96,12 @@ public class PlayerController : MonoBehaviour
                     //Una vez en el suelo, reactivamos la posibilidad de doble salto
                     canDoubleJump = true;
 
-                   
-                    candash = true;
+                    canDash = true;
                 }
                 //Si el jugador no está en el suelo
                 else
                 {
+                    canDash = true;
                     //Si la variable booleana canDoubleJump es verdadera
                     if (canDoubleJump)
                     {
@@ -104,7 +110,7 @@ public class PlayerController : MonoBehaviour
                         //Hacemos que no se pueda volver a saltar de nuevo
                         canDoubleJump = false;
 
-                        candash = false;
+                        
                     }
                 }
             }
@@ -115,37 +121,37 @@ public class PlayerController : MonoBehaviour
                 //Slide
                 theRB.velocity = new Vector2(theRB.velocity.x, slideForce);
             }
-            //Si pulsa el boton de dash
-            if (Input.GetButton("Dash"))
-            {
-                //Si el jugador está en el suelo
-                if (isGrounded && isLeft)
-                {
-                    //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
-                    theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
-                    canairdash = true;
-                }
-                     else if (isGrounded && !isLeft)
-                    {
+            ////Si pulsa el boton de dash
+            //if (Input.GetButton("Dash"))
+            //{
+            //    //Si el jugador está en el suelo
+            //    if (isGrounded && isLeft)
+            //    {
+            //        //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
+            //        theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
+            //        canDash = true;
+            //    }
+            //         else if (isGrounded && !isLeft)
+            //        {
 
-                    theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
-                    canairdash = true;
+            //        theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
+            //        canDash = true;
 
-                    }
-                else
-                {
-                    if (canairdash && isLeft)
-                    {
-                        theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
-                        canairdash = false;
-                    }
-                    else if (canairdash && !isLeft)
-                    {
-                        theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
-                        canairdash = false;
-                    }
-                }
-            }
+            //        }
+            //    else
+            //    {
+            //        if (canDash && isLeft)
+            //        {
+            //            theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
+            //            canDash = false;
+            //        }
+            //        else if (canDash && !isLeft)
+            //        {
+            //            theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
+            //            canDash = false;
+            //        }
+            //    }
+            //}
 
             //Girar el sprite del jugador según su dirección de movimiento
             //Si el jugador se mueve hacia la izquierda
@@ -202,4 +208,34 @@ public class PlayerController : MonoBehaviour
         //Activamos el trigger del animator
         anim.SetTrigger("hurt");
     }
+
+    private void FixedUpdate()
+    {
+        if (isDashing)
+        {
+            return;
+        }
+
+        theRB.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, theRB.velocity.y);
+
+        
+    }
+    private IEnumerator Dash()
+    {
+        canDoubleJump = false;
+        canDash = false;
+        isDashing = true;
+        float originalGravity = theRB.gravityScale;
+        theRB.gravityScale = 0f;
+        theRB.velocity = new Vector2(transform.localScale.x * dashForce, 0f);
+        tr.emitting = true;
+        yield return new WaitForSeconds(dashingTime);
+        tr.emitting = false;
+        theRB.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashingCooldown);
+        canDash = true;
+        Debug.Log("hola");
+    }
+
 }
