@@ -12,18 +12,24 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D theRB;
     //Fuerza de salto del jugador
     public float jumpForce;
-
+    //Planeo
     public float slideForce;
+
+    //Dash
+    private float horizontal;
+    private float speed = 8f;
+    private float jumpingPower = 16f;
+
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dashingCooldown = 1f;
 
 
     //Variable para saber si el jugador está en el suelo
     private bool isGrounded;
 
-    private bool canDash = true;
-    private bool isDashing = true;
-    public float dashForce;
-    private float dashingTime = 0.3f;
-    private float dashingCooldown = 1f;
 
     //Punto por debajo del jugador que tomamos como referencia para detectar el suelo
     public Transform groundCheckPoint;
@@ -71,14 +77,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Dash") && canDash)
-        {
-            StartCoroutine(Dash());
-        }
-
+       
         //Si el contador de KnockBack se ha vaciado, el jugador recupera el control del movimiento
-        if (knockBackCounter <= 0)
-        {
+        if (knockBackCounter <= 0)        {
             //El jugador se mueve 8 en X, y la velocidad que ya tuviera en Y
             theRB.velocity = new Vector2(moveSpeed * Input.GetAxis("Horizontal"), theRB.velocity.y);
 
@@ -96,12 +97,12 @@ public class PlayerController : MonoBehaviour
                     //Una vez en el suelo, reactivamos la posibilidad de doble salto
                     canDoubleJump = true;
 
-                    canDash = true;
+                    
                 }
                 //Si el jugador no está en el suelo
                 else
                 {
-                    canDash = true;
+                    
                     //Si la variable booleana canDoubleJump es verdadera
                     if (canDoubleJump)
                     {
@@ -115,44 +116,15 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+
+
             //Si se pulsa el boton de Slide
             if (Input.GetButton("Slide"))
             {
                 //Slide
                 theRB.velocity = new Vector2(theRB.velocity.x, slideForce);
             }
-            ////Si pulsa el boton de dash
-            //if (Input.GetButton("Dash"))
-            //{
-            //    //Si el jugador está en el suelo
-            //    if (isGrounded && isLeft)
-            //    {
-            //        //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
-            //        theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
-            //        canDash = true;
-            //    }
-            //         else if (isGrounded && !isLeft)
-            //        {
-
-            //        theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
-            //        canDash = true;
-
-            //        }
-            //    else
-            //    {
-            //        if (canDash && isLeft)
-            //        {
-            //            theRB.velocity = new Vector2(-dashForce, theRB.velocity.y);
-            //            canDash = false;
-            //        }
-            //        else if (canDash && !isLeft)
-            //        {
-            //            theRB.velocity = new Vector2(dashForce, theRB.velocity.y);
-            //            canDash = false;
-            //        }
-            //    }
-            //}
-
+           
             //Girar el sprite del jugador según su dirección de movimiento
             //Si el jugador se mueve hacia la izquierda
             if (theRB.velocity.x < 0)
@@ -195,6 +167,17 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("moveSpeed", Mathf.Abs(theRB.velocity.x));//Mathf.Abs hace que un valor negativo sea positivo, lo que nos permite que al movernos a la izquierda también se anime esta acción
         //Cambiamos el valor del parámetro del Animator "isGrounded", dependiendo del valor de la booleana del código "isGrounded"
         anim.SetBool("isGrounded", isGrounded);
+
+
+        if (isDashing)
+        {
+            return;
+        }
+
+        if (Input.GetButton("Dash") && canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
 
     //Método para gestionar el KnockBack producido al jugador al hacerse daño
@@ -207,35 +190,6 @@ public class PlayerController : MonoBehaviour
 
         //Activamos el trigger del animator
         anim.SetTrigger("hurt");
-    }
-
-    private void FixedUpdate()
-    {
-        if (isDashing)
-        {
-            return;
-        }
-
-        theRB.velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed, theRB.velocity.y);
-
-        
-    }
-    private IEnumerator Dash()
-    {
-        canDoubleJump = false;
-        canDash = false;
-        isDashing = true;
-        float originalGravity = theRB.gravityScale;
-        theRB.gravityScale = 0f;
-        theRB.velocity = new Vector2(transform.localScale.x * dashForce, 0f);
-        tr.emitting = true;
-        yield return new WaitForSeconds(dashingTime);
-        tr.emitting = false;
-        theRB.gravityScale = originalGravity;
-        isDashing = false;
-        yield return new WaitForSeconds(dashingCooldown);
-        canDash = true;
-        Debug.Log("hola");
     }
 
 }
