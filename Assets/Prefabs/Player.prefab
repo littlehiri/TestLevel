@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 8120566957803405645}
   - component: {fileID: 8120566957803405642}
   - component: {fileID: 8120566957803405643}
-  - component: {fileID: 8120566957803405641}
   - component: {fileID: 8120566957803405640}
   - component: {fileID: 1237564357}
   - component: {fileID: 1264167478}
+  - component: {fileID: 1264167485}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -37,7 +37,7 @@ Transform:
   m_Children:
   - {fileID: 8120566959238310733}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8120566957803405645
 SpriteRenderer:
@@ -82,7 +82,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 1034524954, guid: f3afad1f08b4d294ca01f330b04f3b24, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 2.5, y: 3}
@@ -128,30 +128,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.35}
   m_Size: {x: 1, y: 2.3}
   m_Direction: 0
---- !u!114 &8120566957803405641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8120566957803405646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89aa450931286854e9046055e24db197, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tr: {fileID: 1264167478}
-  moveSpeed: 15
-  jumpForce: 16
-  slideForce: 0
-  dashForce: 25
-  groundCheckPoint: {fileID: 8120566959238310733}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 64
-  knockBackLength: 0.25
-  knockBackForce: 8
-  isLeft: 0
 --- !u!95 &8120566957803405640
 Animator:
   serializedVersion: 4
@@ -299,6 +275,28 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &1264167485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8120566957803405646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96bb5412c7b933241925134ec0f78360, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackLength: 0.2
+  knockBackForce: 8
+  slideForce: 0
+  theRB: {fileID: 8120566957803405642}
+  groundCheckPoint: {fileID: 0}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  tr: {fileID: 1264167478}
+  theSR: {fileID: 0}
 --- !u!1 &8120566959238310734
 GameObject:
   m_ObjectHideFlags: 0

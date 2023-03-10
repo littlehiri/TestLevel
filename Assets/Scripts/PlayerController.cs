@@ -22,9 +22,9 @@ public class PlayerController : MonoBehaviour
 
     private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 24f;
-    private float dashingTime = 0.2f;
-    private float dashingCooldown = 1f;
+    private float dashingPower = 30f;
+    private float dashingTime = 0.3f;
+    private float dashingCooldown = .3f;
 
 
     //Variable para saber si el jugador está en el suelo
@@ -174,10 +174,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (Input.GetButton("Dash") && canDash)
-        {
-            StartCoroutine(Dash());
-        }
+       
     }
 
     //Método para gestionar el KnockBack producido al jugador al hacerse daño

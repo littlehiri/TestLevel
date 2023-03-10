@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &178147299 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8120566959238310733, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
+  m_PrefabInstance: {fileID: 1878382424}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &221274406
 GameObject:
   m_ObjectHideFlags: 0
@@ -9677,10 +9682,14 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8120566957803405641, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
-      propertyPath: moveSpeed
-      value: 12
+    - target: {fileID: 1264167485, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
+      propertyPath: isGrounded
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1264167485, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
+      propertyPath: groundCheckPoint
+      value: 
+      objectReference: {fileID: 178147299}
     - target: {fileID: 8120566957803405644, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
       propertyPath: m_RootOrder
       value: 11
