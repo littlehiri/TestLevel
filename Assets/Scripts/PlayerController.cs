@@ -16,15 +16,15 @@ public class PlayerController : MonoBehaviour
     public float slideForce;
 
     //Dash
-    private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 16f;
+    //private float horizontal;
+    //private float speed = 8f;
+    //private float jumpingPower = 16f;
 
-    private bool canDash = true;
+    //private bool canDash = true;
     private bool isDashing;
-    private float dashingPower = 30f;
-    private float dashingTime = 0.3f;
-    private float dashingCooldown = .3f;
+    //private float dashingPower = 30f;
+    //private float dashingTime = 0.3f;
+    //private float dashingCooldown = .3f;
 
 
     //Variable para saber si el jugador está en el suelo
