@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    
+
     [SerializeField] private TrailRenderer tr;
 
     //Velocidad del jugador
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-       
+
     }
 
     //Método para gestionar el KnockBack producido al jugador al hacerse daño

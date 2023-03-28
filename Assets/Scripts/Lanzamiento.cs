@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class Lanzamiento : MonoBehaviour
 {
+    public static Lanzamiento sharedInstance;
+
+    private void Awake()
+    {
+        if (sharedInstance == null)
+        {
+            sharedInstance = this;
+        }
+    }
+
     private SpriteRenderer spriteRenderer;
 
     public new Camera camera;
+    
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -25,7 +36,7 @@ public class Lanzamiento : MonoBehaviour
         float angle = GetAngleTowardsMouse();
 
         transform.rotation = Quaternion.Euler(0, 0, angle);
-        spriteRenderer.flipY = angle >= 90 && angle <= 270;
+        
     }
 
     private float GetAngleTowardsMouse()
@@ -39,4 +50,5 @@ public class Lanzamiento : MonoBehaviour
 
         return angle;
     }
+    
 }

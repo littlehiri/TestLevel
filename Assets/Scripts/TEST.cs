@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TEST : MonoBehaviour
 {
+    public Transform spawner;
+    public GameObject bulletPrefab;
     private float horizontal;
     private float speed = 10f;
     private float jumpForce = 18f;
@@ -42,6 +44,16 @@ public class TEST : MonoBehaviour
 
     void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GameObject bullet = Instantiate(bulletPrefab);
+            bullet.transform.position = spawner.position;
+            bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
+            Destroy(bullet, 2f);
+        }
+
+
         isGrounded = Physics2D.OverlapCircle(groundCheckPoint.position, .2f, whatIsGround);
 
         if (isDashing)
@@ -80,59 +92,6 @@ public class TEST : MonoBehaviour
 
         Flip();
 
-       //OverlapCircle(punto donde se genera el círculo, radio del círculo, layer a detectar)
-                                                                                           //Si el contador de KnockBack se ha vaciado, el jugador recupera el control del movimiento
-        //if (knockBackCounter <= 0)
-        //{
-
-        //        //Si se pulsa el botón de salto
-        //        if (Input.GetButtonDown("Jump"))
-        //    {
-        //        //Si el jugador está en el suelo
-        //        if (isGrounded)
-        //        {
-        //            //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
-        //            theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-        //            //Una vez en el suelo, reactivamos la posibilidad de doble salto
-        //            canDoubleJump = true;
-
-
-        //        }
-        //        //Si el jugador no está en el suelo
-        //        else
-        //        {
-
-        //            //Si la variable booleana canDoubleJump es verdadera
-        //            if (canDoubleJump)
-        //            {
-        //                //El jugador salta, manteniendo su velocidad en X, y aplicamos la fuerza de salto
-        //                theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
-        //                //Hacemos que no se pueda volver a saltar de nuevo
-        //                canDoubleJump = false;
-
-
-        //            }
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    //Hacemos decrecer el contador en 1 cada segundo
-        //    knockBackCounter -= Time.deltaTime;
-        //    //Si el jugador mira a la izquierda
-        //    if (!theSR.flipX)
-        //    {
-        //        //Aplicamos un pequeño empuje a la derecha
-        //        theRB.velocity = new Vector2(knockBackForce, theRB.velocity.y);
-        //    }
-        //    //Si el jugador mira a la derecha
-        //    else
-        //    {
-        //        //Aplicamos un pequeño empuje a la izquierda
-        //        theRB.velocity = new Vector2(-knockBackForce, theRB.velocity.y);
-        //    }
-        //}
-
         //Si se pulsa el boton de Slide
         if (Input.GetButton("Slide"))
         {
@@ -164,6 +123,7 @@ public class TEST : MonoBehaviour
         }
     }
 
+
     private IEnumerator Dash()
     {
         canDash = false;
@@ -179,4 +139,6 @@ public class TEST : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         canDash = true;
     }
+
+
 }
