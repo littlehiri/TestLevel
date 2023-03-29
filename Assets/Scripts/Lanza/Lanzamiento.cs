@@ -31,7 +31,7 @@ public class Lanzamiento : MonoBehaviour
         RotateTowardsMouse();
     }
 
-    private void RotateTowardsMouse()
+    public void RotateTowardsMouse()
     {
         float angle = GetAngleTowardsMouse();
 
@@ -39,7 +39,7 @@ public class Lanzamiento : MonoBehaviour
         
     }
 
-    private float GetAngleTowardsMouse()
+    public float GetAngleTowardsMouse()
     {
         Vector3 mouseWorldPosition = camera.ScreenToWorldPoint(Input.mousePosition);
 

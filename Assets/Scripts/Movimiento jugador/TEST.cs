@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TEST : MonoBehaviour
 {
+    public GameObject lanza;
+
     public Transform spawner;
     public GameObject bulletPrefab;
     private float horizontal;
@@ -49,7 +51,7 @@ public class TEST : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.transform.position = spawner.position;
-            bullet.transform.rotation = Quaternion.Euler(0, 0, -90);
+            bullet.transform.rotation = lanza.transform.rotation;
             Destroy(bullet, 2f);
         }
 

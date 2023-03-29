@@ -9817,6 +9817,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1264167485, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
+      propertyPath: lanza
+      value: 
+      objectReference: {fileID: 1760832405}
+    - target: {fileID: 1264167485, guid: 9096e31908c10f24bb10baf2c1919129, type: 3}
       propertyPath: spawner
       value: 
       objectReference: {fileID: 462446342}
