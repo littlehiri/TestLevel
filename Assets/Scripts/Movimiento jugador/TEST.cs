@@ -51,7 +51,7 @@ public class TEST : MonoBehaviour
         {
             GameObject bullet = Instantiate(bulletPrefab);
             bullet.transform.position = spawner.position;
-            bullet.transform.rotation = lanza.transform.rotation;
+            bullet.transform.rotation = spawner.transform.rotation;
             Destroy(bullet, 2f);
         }
 
